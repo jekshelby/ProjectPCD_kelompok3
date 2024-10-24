@@ -41,7 +41,7 @@ if image_path:
     cv2.imshow('Compressed', compressed_img)
 
     # Menentukan folder penyimpanan
-    save_directory = './assets/img'
+    save_directory = './ouput/img'
     ensure_directory_exists(save_directory)  # Membuat folder jika belum ada
 
     # Membuat path lengkap untuk menyimpan gambar
