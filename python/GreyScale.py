@@ -14,8 +14,8 @@ def pilih_gambar():
     return file_path
 
 # Membuat folder assets jika belum ada
-if not os.path.exists('assets'):
-    os.makedirs('assets')
+if not os.path.exists('output'):
+    os.makedirs('output')
 
 # Memilih gambar dari file explorer
 input_path = pilih_gambar()
@@ -35,7 +35,7 @@ if input_path:
     # cv.imshow('Grayscale', gray_image)
 
     # Menyimpan gambar grayscale ke dalam folder assets
-    output_path = os.path.join('assets', 'grayscale_image.png')
+    output_path = os.path.join('output', 'grayscale_image.png')
     cv.imwrite(output_path, gray_image)
 
     print(f"Gambar grayscale berhasil disimpan di {output_path}")
@@ -64,8 +64,8 @@ else:
 #     return file_path
 
 # # Membuat folder assets jika belum ada
-# if not os.path.exists('assets'):
-#     os.makedirs('assets')
+# if not os.path.exists('output'):
+#     os.makedirs('output')
 
 # # Memilih gambar dari file explorer
 # input_path = pilih_gambar()
@@ -79,7 +79,7 @@ else:
 #     cv.imshow('Grayscale Image', img)
 
 #     # Menyimpan gambar grayscale ke dalam folder assets
-#     output_path = os.path.join('assets', 'grayscale_image.png')
+#     output_path = os.path.join('output', 'grayscale_image.png')
 #     cv.imwrite(output_path, img)
 
 #     print(f"Gambar grayscale berhasil disimpan di {output_path}")

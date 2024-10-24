@@ -25,8 +25,8 @@ def pilih_gambar():
     return file_path
 
 # Membuat folder assets jika belum ada
-if not os.path.exists('assets'):
-    os.makedirs('assets')
+if not os.path.exists('output'):
+    os.makedirs('output')
 
 # Memilih gambar dari file explorer
 input_path = pilih_gambar()
@@ -39,7 +39,7 @@ if input_path:
     new_image = remove(image)
 
     # Menentukan path untuk menyimpan gambar baru
-    output_path = os.path.join('assets', 'output_image.png')
+    output_path = os.path.join('output', 'removeBG_image.png')
 
     # Menyimpan gambar hasil tanpa background ke dalam folder assets
     cv.imwrite(output_path, new_image)
