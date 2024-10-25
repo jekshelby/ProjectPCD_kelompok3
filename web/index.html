@@ -1,91 +1,114 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>I Hate Image - Project Kelompok 3</title>
+    <link rel="icon" href="assets/a logo.png" type="image/png">
+
     <!-- Link Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         .card {
-            height: 100%; /* Mengatur tinggi kartu untuk seluruh area */
+            height: 100%;
+            /* Mengatur tinggi kartu untuk seluruh area */
         }
+
         .card img {
-            height: 100px; /* Atur tinggi gambar */
+            height: 100px;
+            /* Atur tinggi gambar */
             width: 100px;
-            object-fit: cover; /* Agar gambar tetap proporsional */
+            object-fit: cover;
+            /* Agar gambar tetap proporsional */
         }
+
         .footer {
             position: relative;
             bottom: 0;
             width: 100%;
         }
+
+        body {
+            font-family: 'Tahoma', sans-serif;
+        }
     </style>
 </head>
+
 <body>
 
-<header class="bg-danger text-white text-start py-1 px-5">
-    <h1>I <img src="assets/love.png" alt="" style="height: 50px;"> Image</h1>
-</header>
+    <header class="bg-danger text-white text-start py-1 px-5">
+        <h1>Im<img src="assets/a logo.png" alt="" style="height: 50px;">ge</h1>
+    </header>
 
-<h1 class="text-center my-4">Fitur Yang Dapat Dipakai</h1>
+    <h1 class="text-center my-4">Fitur Yang Dapat Dipakai</h1>
 
-<div class="container my-5">
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
-        <div class="col">
-            <div class="card text-center btn btn-danger" style="cursor: pointer;" onclick="window.location.href='compres.html'">
-                <div class="card-body d-flex flex-column justify-content-center align-items-center">
-                    <img src="assets/data-compression.png" alt="Compress Image">
-                    <h3 class="card-title mt-3">Compress Image</h3>
-                    <p class="card-text">Compress image bertujuan untuk memperkecil ukuran file gambar tanpa mengurangi kualitasnya secara signifikan.</p>
+    <div class="container my-5">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+            <div class="col">
+                <div class="card text-center btn btn-danger" style="cursor: pointer;"
+                    onclick="window.location.href='compres.html'">
+                    <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                        <img src="assets/data-compression.png" alt="Compress Image">
+                        <h3 class="card-title mt-3">Compress Image</h3>
+                        <p class="card-text">Compress image bertujuan untuk memperkecil ukuran file gambar tanpa
+                            mengurangi kualitasnya secara signifikan.</p>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col">
-            <div class="card text-center btn btn-danger" style="cursor: pointer;" onclick="window.location.href='greyscale.html'">
-                <div class="card-body d-flex flex-column justify-content-center align-items-center">
-                    <img src="assets/greyscale.png" alt="Greyscale Image">
-                    <h3 class="card-title mt-3">Greyscale</h3>
-                    <p class="card-text">Greyscale image bertujuan untuk mengubah warna gambar menjadi hitam-putih (Abu-abu).</p>
+            <div class="col">
+                <div class="card text-center btn btn-danger" style="cursor: pointer;"
+                    onclick="window.location.href='greyscale.html'">
+                    <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                        <img src="assets/greyscale.png" alt="Greyscale Image">
+                        <h3 class="card-title mt-3">Greyscale</h3>
+                        <p class="card-text">Greyscale image bertujuan untuk mengubah warna gambar menjadi hitam-putih
+                            (Abu-abu).</p>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col">
-            <div class="card text-center btn btn-danger" style="cursor: pointer;" onclick="window.location.href='rmbg.html'">
-                <div class="card-body d-flex flex-column justify-content-center align-items-center">
-                    <img src="assets/delete-user.png" alt="Remove Background Image">
-                    <h3 class="card-title mt-3">Remove Background</h3>
-                    <p class="card-text">Remove background image bertujuan untuk menghapus background dari image.</p>
+            <div class="col">
+                <div class="card text-center btn btn-danger" style="cursor: pointer;"
+                    onclick="window.location.href='rmbg.html'">
+                    <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                        <img src="assets/delete-user.png" alt="Remove Background Image">
+                        <h3 class="card-title mt-3">Remove Background</h3>
+                        <p class="card-text">Remove background image bertujuan untuk menghapus background dari image.
+                        </p>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col">
-            <div class="card text-center btn btn-danger" style="cursor: pointer;" onclick="window.location.href='sr.html'">
-                <div class="card-body d-flex flex-column justify-content-center align-items-center">
-                    <img src="assets/images.png" alt="Super Resolution Image">
-                    <h3 class="card-title mt-3">Super Resolution</h3>
-                    <p class="card-text">Super Resolution image bertujuan untuk meningkatkan resolusi gambar, menghasilkan gambar yang lebih tajam dan lebih jelas.</p>
+            <div class="col">
+                <div class="card text-center btn btn-danger" style="cursor: pointer;"
+                    onclick="window.location.href='sr.html'">
+                    <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                        <img src="assets/images.png" alt="Super Resolution Image">
+                        <h3 class="card-title mt-3">Super Resolution</h3>
+                        <p class="card-text">Super Resolution image bertujuan untuk meningkatkan resolusi gambar,
+                            menghasilkan gambar yang lebih tajam dan lebih jelas.</p>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col">
-            <div class="card text-center btn btn-danger" style="cursor: pointer;" onclick="window.location.href='crop.html'">
-                <div class="card-body d-flex flex-column justify-content-center align-items-center">
-                    <img src="assets/crop.png" alt="Crop Image">
-                    <h3 class="card-title mt-3">Crop Image</h3>
-                    <p class="card-text">Crop image bertujuan untuk memangkas bagian gambar yang diinginkan.</p>
+            <div class="col">
+                <div class="card text-center btn btn-danger" style="cursor: pointer;"
+                    onclick="window.location.href='crop.html'">
+                    <div class="card-body d-flex flex-column justify-content-center align-items-center">
+                        <img src="assets/crop.png" alt="Crop Image">
+                        <h3 class="card-title mt-3">Crop Image</h3>
+                        <p class="card-text">Crop image bertujuan untuk memangkas bagian gambar yang diinginkan.</p>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-<!-- Footer -->
-<footer class="footer bg-dark text-white text-center py-2">
-    <p>© 2024 Alat Image Sederhana. Semua Karya Kelompok 3</p>
-</footer>
+    <!-- Footer -->
+    <footer class="footer bg-dark text-white text-center py-2">
+        <p>© 2024 Alat Image Sederhana. Semua Karya Kelompok 3</p>
+    </footer>
 
-<!-- Link Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Link Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>
