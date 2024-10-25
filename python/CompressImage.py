@@ -5,7 +5,7 @@ from tkinter import filedialog
 import os
 
 
-def compress_image(image_path, quality=70):
+def compress_image(image_path, quality=10):
     # Baca gambar
     img = cv2.imread(image_path)
     
@@ -34,14 +34,14 @@ def ensure_directory_exists(directory):
 image_path = select_image()  # Meminta pengguna untuk memilih gambar
 if image_path:
     original_img = cv2.imread(image_path)
-    compressed_img, encoded_img = compress_image(image_path, quality=80)
+    compressed_img, encoded_img = compress_image(image_path, quality=10)
 
     # Menampilkan hasil
     cv2.imshow('Original', original_img)
     cv2.imshow('Compressed', compressed_img)
 
     # Menentukan folder penyimpanan
-    save_directory = './ouput/img'
+    save_directory = './output/img'
     ensure_directory_exists(save_directory)  # Membuat folder jika belum ada
 
     # Membuat path lengkap untuk menyimpan gambar
