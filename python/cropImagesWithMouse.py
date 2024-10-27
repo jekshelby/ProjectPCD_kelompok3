@@ -1,6 +1,5 @@
 import cv2 as cv
 
-
 # Variabel global untuk menyimpan koordinat awal dan akhir
 start_point = None
 end_point = None
@@ -20,7 +19,26 @@ def mouse_crop(event, x, y, flags, param):
       if cropping:
             end_point = (x, y)
             image = clone.copy()
+            
+            # Gambar persegi panjang yang menandai area cropping
             cv.rectangle(image, start_point, end_point, (0, 255, 0), 2)
+            
+            # Hitung lebar dan tinggi area crop
+            width = abs(end_point[0] - start_point[0])
+            height = abs(end_point[1] - start_point[1])
+
+            # Tampilkan informasi secara vertikal
+            info_texts = [
+               f"Koordinat X: {x} Pixel",
+               f"Koordinat Y: {y} Pixel",
+               f"Lebar Crop: {width} Pixel",
+               f"Tinggi Crop: {height} Pixel"
+            ]
+            
+            # Tampilkan setiap baris teks secara vertikal
+            for i, text in enumerate(info_texts):
+                cv.putText(image, text, (10, 30 + i * 20), cv.FONT_HERSHEY_SIMPLEX, 0.6, (255, 255, 255), 2)
+            
             cv.imshow("Gambar", image)
 
    # Ketika klik kiri dilepas, catat koordinat akhir dan set cropping selesai
@@ -36,7 +54,7 @@ def mouse_crop(event, x, y, flags, param):
             cv.imshow("Hasil Crop", crop_img)
 
 # Baca gambar
-image = cv.imread('assets/model/img/colors.jpg')
+image = cv.imread('assets/image/mew.jpeg')
 clone = image.copy()
 crop_img = None  # Variabel untuk menyimpan hasil crop
 
