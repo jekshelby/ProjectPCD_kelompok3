@@ -32,7 +32,7 @@ if input_path:
         # Load the pre-trained ESPCN model
         sr = cv2.dnn_superres.DnnSuperResImpl_create()
         
-        model_path = 'assets/ESPCN_x4.pb'  # Perbarui path jika model disimpan di folder berbeda
+        model_path = 'assets/model/ESPCN_x4.pb'  # Perbarui path jika model disimpan di folder berbeda
         if os.path.exists(model_path):
             sr.readModel(model_path)
         else:
