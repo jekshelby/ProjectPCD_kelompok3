@@ -36,7 +36,7 @@ def mouse_crop(event, x, y, flags, param):
             cv.imshow("Hasil Crop", crop_img)
 
 # Baca gambar
-image = cv.imread('colors.jpg')
+image = cv.imread('assets/model/img/colors.jpg')
 clone = image.copy()
 crop_img = None  # Variabel untuk menyimpan hasil crop
 
