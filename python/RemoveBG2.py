@@ -1,6 +1,5 @@
 import cv2 as cv
 import numpy as np
-from rembg import remove
 from PIL import Image
 import os
 from tkinter import Tk
@@ -23,33 +22,52 @@ if not os.path.exists('output'):
 input_path = pilih_gambar()
 
 if input_path:
-    # Variabel untuk menggambar persegi
+    # Variabel untuk menggambar persegi dan menyimpan koordinat
     drawing = False
-    ix, iy = -1, -1
-    final_x, final_y = -1, -1
+    mode = 'rectangle'  # Mode awal: 'rectangle' atau 'brush'
+    brush_radius = 10  # Ukuran brush
+    selected_areas = []  # Menyimpan area persegi panjang
+    brush_strokes = []  # Menyimpan titik brush
 
-    # Fungsi untuk menggambar persegi berdasarkan klik mouse
-    def draw_rectangle(event, x, y, flags, param):
-        global ix, iy, drawing, final_x, final_y, img
+    # Fungsi untuk menggambar persegi atau brush berdasarkan klik mouse
+    def draw_selection(event, x, y, flags, param):
+        global ix, iy, drawing, img
 
-        if event == cv.EVENT_LBUTTONDOWN:
-            drawing = True
-            ix, iy = x, y
+        if mode == 'rectangle':
+            if event == cv.EVENT_LBUTTONDOWN:
+                drawing = True
+                ix, iy = x, y
 
-        elif event == cv.EVENT_MOUSEMOVE:
-            if drawing:
-                img_temp = img.copy()
-                cv.rectangle(img_temp, (ix, iy), (x, y), (0, 255, 0), 2)
-                cv.imshow('Image', img_temp)
+            elif event == cv.EVENT_MOUSEMOVE:
+                if drawing:
+                    img_temp = img.copy()
+                    cv.rectangle(img_temp, (ix, iy), (x, y), (0, 255, 0), 2)
+                    cv.imshow('Image', img_temp)
 
-        elif event == cv.EVENT_LBUTTONUP:
-            drawing = False
-            final_x, final_y = x, y
-            cv.rectangle(img, (ix, iy), (final_x, final_y), (0, 255, 0), 2)
-            cv.imshow('Image', img)
+            elif event == cv.EVENT_LBUTTONUP:
+                drawing = False
+                final_x, final_y = x, y
+                selected_areas.append((ix, iy, final_x, final_y))
+                cv.rectangle(img, (ix, iy), (final_x, final_y), (0, 255, 0), 2)
+                cv.imshow('Image', img)
+
+        elif mode == 'brush':
+            if event == cv.EVENT_LBUTTONDOWN:
+                drawing = True
+                cv.circle(img, (x, y), brush_radius, (0, 255, 0), -1)
+                brush_strokes.append((x, y))
+
+            elif event == cv.EVENT_MOUSEMOVE:
+                if drawing:
+                    cv.circle(img, (x, y), brush_radius, (0, 255, 0), -1)
+                    brush_strokes.append((x, y))
+
+            elif event == cv.EVENT_LBUTTONUP:
+                drawing = False
 
     # Load gambar yang dipilih
     img = cv.imread(input_path)
+    img = cv.cvtColor(img, cv.COLOR_BGR2BGRA)  # Ubah menjadi format 4 channel (RGBA)
 
     # Cek ukuran gambar, jika lebih besar dari 450x600, resize
     height, width = img.shape[:2]
@@ -60,40 +78,38 @@ if input_path:
         print("Gambar tidak lebih besar dari 450x600, ditampilkan dalam ukuran asli.")
 
     cv.namedWindow('Image')
-    cv.setMouseCallback('Image', draw_rectangle)
+    cv.setMouseCallback('Image', draw_selection)
 
     while True:
         cv.imshow('Image', img)
         key = cv.waitKey(1)
+        
         if key == 27:  # Tekan ESC untuk keluar
             break
+        elif key == ord('m'):  # Tekan "m" untuk mengganti mode
+            mode = 'brush' if mode == 'rectangle' else 'rectangle'
+            print(f"Mode seleksi berubah menjadi: {mode}")
 
-    # Cek apakah area yang dipilih valid
-    if ix >= 0 and iy >= 0 and final_x >= 0 and final_y >= 0 and ix < final_x and iy < final_y:
-        selected_area = img[iy:final_y, ix:final_x]
+    # Menghapus area yang dipilih
+    for (x1, y1, x2, y2) in selected_areas:
+        img[y1:y2, x1:x2, 3] = 0  # Set alpha channel menjadi 0 untuk area persegi panjang
 
-        if selected_area.size > 0:  # Pastikan area yang dipilih tidak kosong
-            selected_area_pil = Image.fromarray(cv.cvtColor(selected_area, cv.COLOR_BGR2RGB))
-            background_removed = remove(selected_area_pil)
+    # Menghapus area berdasarkan brush strokes
+    for (x, y) in brush_strokes:
+        cv.circle(img, (x, y), brush_radius, (0, 0, 0, 0), -1)  # Set alpha channel menjadi 0 untuk brush strokes
 
-            # Simpan gambar tanpa background ke dalam folder output
-            output_path = os.path.join('output', 'output_image.png')
+    # Simpan gambar hasil ke dalam folder output
+    output_path = os.path.join('output', 'output_image.png')
 
-            # Ubah background_removed ke format RGB
-            background_removed = background_removed.convert("RGBA")
+    # Konversi ke format Image PIL dan simpan
+    result_img = Image.fromarray(cv.cvtColor(img, cv.COLOR_BGRA2RGBA))
+    result_img.save(output_path)
+    print(f"Gambar tanpa bagian yang dipilih berhasil disimpan di {output_path}")
 
-            try:
-                background_removed.save(output_path)  # Simpan hasil remove dengan PIL
-                print(f"Gambar berhasil disimpan di {output_path}")
-            except Exception as e:
-                print(f"Error saat menyimpan gambar: {e}")
+    # Tampilkan hasil tanpa bagian yang dipilih
+    cv.imshow('Final Image', img)
+    cv.waitKey(0)
 
-            # Tampilkan hasil tanpa background
-            background_removed_np = np.array(background_removed)
-            cv.imshow('Background Removed', background_removed_np)
-            cv.waitKey(0)
-        else:
-            print("Area yang dipilih kosong.")
 else:
     print("Tidak ada gambar yang dipilih.")
 
