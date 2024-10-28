@@ -99,7 +99,7 @@ if input_path:
         cv.circle(img, (x, y), brush_radius, (0, 0, 0, 0), -1)  # Set alpha channel menjadi 0 untuk brush strokes
 
     # Simpan gambar hasil ke dalam folder output
-    output_path = os.path.join('output', 'output_image.png')
+    output_path = os.path.join('output', 'Remove_Background_image.png')
 
     # Konversi ke format Image PIL dan simpan
     result_img = Image.fromarray(cv.cvtColor(img, cv.COLOR_BGRA2RGBA))
