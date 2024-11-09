@@ -24,7 +24,7 @@ result = sr.upsample(image)
 
 # Post-processing: Cobalah tanpa sharpening jika tidak perlu
 # Hanya simpan gambar tanpa sharpening terlebih dahulu untuk uji coba
-output_path = os.path.join('output', 'super_resolution.png')
+output_path = os.path.join('output', 'super_resolution.jpg')
 
 # Cek apakah penyimpanan berhasil
 if cv2.imwrite(output_path, result):
