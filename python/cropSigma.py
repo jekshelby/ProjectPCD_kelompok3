@@ -4,46 +4,26 @@ import numpy as np
 # Baca gambar
 image_path = "output/tesAja.jpeg"
 image = cv2.imread(image_path)
-
-# Seleksi ukuran gambar
-max_width, max_height = 450, 600  # Batas maksimum lebar dan tinggi
-height, width = image.shape[:2]
-
-if width > max_width or height > max_height:
-    # Ubah ukuran gambar dengan mempertahankan aspek rasio
-    scaling_factor = min(max_width / width, max_height / height)
-    new_width = int(width * scaling_factor)
-    new_height = int(height * scaling_factor)
-    image = cv2.resize(image, (new_width, new_height), interpolation=cv2.INTER_AREA)
-
-# Clone untuk gambar asli
 clone = image.copy()
 
 # Variabel global
-rect_start = (50, 50)  # Posisi awal (kiri atas)
-rect_end = (200, 300)  # Posisi akhir (kanan bawah)
-selected_corner = None  # Corner yang sedang di-drag
-dragging = False        # Status dragging
+rect_start = (100, 100)  # Posisi awal (kiri atas)
+rect_end = (300, 400)    # Posisi akhir (kanan bawah)
+selected_corner = None   # Corner yang sedang di-drag
+dragging = False         # Status dragging
 
 # Fungsi untuk menggambar persegi dengan pegangan (handle)
 def draw_rectangle_with_handles(img, start, end):
     temp_image = img.copy()
     cv2.rectangle(temp_image, start, end, (0, 255, 0), 2)
 
-    # Tambahkan titik pegangan di sudut persegi dan tengah sisi
+    # Tambahkan titik pegangan di sudut persegi
     handle_size = 10
     corners = [
         start, (end[0], start[1]),  # Kiri atas, kanan atas
         end, (start[0], end[1])    # Kanan bawah, kiri bawah
     ]
-    midpoints = [
-        ((start[0] + end[0]) // 2, start[1]),  # Tengah atas
-        (end[0], (start[1] + end[1]) // 2),    # Tengah kanan
-        ((start[0] + end[0]) // 2, end[1]),    # Tengah bawah
-        (start[0], (start[1] + end[1]) // 2)   # Tengah kiri
-    ]
-
-    for corner in corners + midpoints:
+    for corner in corners:
         cv2.rectangle(temp_image,
                       (corner[0] - handle_size, corner[1] - handle_size),
                       (corner[0] + handle_size, corner[1] + handle_size),
@@ -64,25 +44,17 @@ def mouse_callback(event, x, y, flags, param):
         rect_start, (rect_end[0], rect_start[1]),  # Kiri atas, kanan atas
         rect_end, (rect_start[0], rect_end[1])    # Kanan bawah, kiri bawah
     ]
-    midpoints = [
-        ((rect_start[0] + rect_end[0]) // 2, rect_start[1]),  # Tengah atas
-        (rect_end[0], (rect_start[1] + rect_end[1]) // 2),    # Tengah kanan
-        ((rect_start[0] + rect_end[0]) // 2, rect_end[1]),    # Tengah bawah
-        (rect_start[0], (rect_start[1] + rect_end[1]) // 2)   # Tengah kiri
-    ]
-
-    handles = corners + midpoints
 
     if event == cv2.EVENT_LBUTTONDOWN:
         # Periksa apakah klik berada di salah satu handle
-        for i, handle in enumerate(handles):
-            if is_in_handle(x, y, handle, handle_size):
+        for i, corner in enumerate(corners):
+            if is_in_handle(x, y, corner, handle_size):
                 selected_corner = i
                 dragging = True
                 break
 
     elif event == cv2.EVENT_MOUSEMOVE and dragging:
-        # Ubah posisi sudut atau sisi berdasarkan handle yang di-drag
+        # Ubah posisi sudut berdasarkan corner yang di-drag
         if selected_corner == 0:       # Kiri atas
             rect_start = (x, y)
         elif selected_corner == 1:     # Kanan atas
@@ -93,14 +65,6 @@ def mouse_callback(event, x, y, flags, param):
         elif selected_corner == 3:     # Kiri bawah
             rect_start = (x, rect_start[1])
             rect_end = (rect_end[0], y)
-        elif selected_corner == 4:     # Tengah atas
-            rect_start = (rect_start[0], y)
-        elif selected_corner == 5:     # Tengah kanan
-            rect_end = (x, rect_end[1])
-        elif selected_corner == 6:     # Tengah bawah
-            rect_end = (rect_end[0], y)
-        elif selected_corner == 7:     # Tengah kiri
-            rect_start = (x, rect_start[1])
 
         # Gambarkan ulang
         image = draw_rectangle_with_handles(clone, rect_start, rect_end)
